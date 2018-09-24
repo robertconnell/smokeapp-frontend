@@ -6,8 +6,20 @@ import { Actions } from 'react-native-router-flux';
 
 export default class Input extends React.Component {
     inputInfo() {
-        console.log(this.state);
-        Actions.smokebreak()
+        fetch('http://localhost:3000/smoker', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            name: this.state.name,
+            day_start: this.state.day_start,
+            day_end: this.state.day_end,
+            cigarette_limit: this.state.cigarette_limit
+            }),
+        });
+        Actions.smokebreak({text: 'Hello World'})
     }
     constructor(props) {
         super(props);
@@ -21,6 +33,10 @@ export default class Input extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <View>
+                    <Text style={styles.label}>Welcome to SmokeBreak!</Text>
+                    <Text style={styles.label}>What's your day looking like?</Text>
+                </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Name:</Text>
                     <TextInput
@@ -72,6 +88,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     }, label: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center',
         fontFamily: 'AppleSDGothicNeo-SemiBold'
     }, button: {
         alignItems: 'center',

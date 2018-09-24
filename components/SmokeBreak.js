@@ -1,12 +1,21 @@
 import React from 'react';
 import Header from './Header';
 import Input from './Input';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 export default class SmokeBreak extends React.Component {
-    consoleLog() {
-        console.log(response.data)
+    takingBreak() {
+        Alert.alert(
+            this.props.text,
+            'My Alert Msg',
+            [
+              {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
     }
 
     componentDidMount() {
@@ -32,7 +41,7 @@ export default class SmokeBreak extends React.Component {
                 <TouchableOpacity style={styles.button} onPress={() => Actions.home()}>
                     <Text style={styles.buttonText}>Skip this one</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => this.consoleLog()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.takingBreak()}>
                     <Text style={styles.buttonText}>Take my break</Text>
                 </TouchableOpacity>
             </View>

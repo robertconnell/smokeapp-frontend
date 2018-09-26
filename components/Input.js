@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 
 export default class Input extends React.Component {
     inputInfo() {
-        fetch('http://localhost:3000/smoker', {
+        fetch('https://smokeapp.herokuapp.com/smoker', {
             method: 'POST',
             headers: {
             Accept: 'application/json',
@@ -17,30 +17,46 @@ export default class Input extends React.Component {
             day_start: this.state.day_start,
             day_end: this.state.day_end,
             cigarette_limit: this.state.cigarette_limit
-            }),
+            })
         });
-        Actions.smokebreak({text: 'Hello World'})
+        fetch('https://smokeapp.herokuapp.com/smoke_break', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            break_interval: ((this.state.day_end-this.state.day_start)/this.state.cigarette_limit),
+            breaks_left: this.state.cigarette_limit
+            })
+        });
+        Actions.smokebreak({
+            smoker_name: this.state.smoker_name,
+            day_start: this.state.day_start,
+            day_end: this.state.day_end,
+            cigarette_limit: this.state.cigarette_limit
+    })
     }
     constructor(props) {
         super(props);
         this.state={
-            name: '',
-            day_start: '',
-            day_end: '',
-            cigarette_limit: '',
+            smoker_name: '',
+            day_start: 0,
+            day_end: 0,
+            cigarette_limit: 0,
         }
     }
     render() {
         return (
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.label}>Welcome to SmokeBreak!</Text>
-                    <Text style={styles.label}>What's your day looking like?</Text>
+                    <Text style={styles.welcomeText}>Welcome to SmokeBreak!</Text>
+                    <Text style={styles.welcomeText} onPress={() => Actions.smokebreak()}>What's your day looking like?</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Name:</Text>
                     <TextInput
-                    style={styles.input} onChangeText={(name) => this.setState({name: name})}
+                    style={styles.input} onChangeText={(smoker_name) => this.setState({smoker_name: smoker_name})}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -87,11 +103,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
+    }, welcomeText: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center',
+        fontFamily: 'AppleSDGothicNeo-SemiBold',
+        marginBottom: 15,
+        fontSize: 17
     }, label: {
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        fontFamily: 'AppleSDGothicNeo-SemiBold'
+        fontFamily: 'AppleSDGothicNeo-SemiBold',
     }, button: {
         alignItems: 'center',
         backgroundColor: '#6d86ad',

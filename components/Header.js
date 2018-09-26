@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 export default class App extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-            <Text style={styles.title}>Smoke Break</Text>
+            <Text style={styles.title} onPress={() => Actions.home()}>Smoke Break</Text>
             </View>
         );
     }

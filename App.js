@@ -3,13 +3,9 @@ import Header from './components/Header';
 import Input from './components/Input';
 import SmokeBreak from './components/SmokeBreak';
 import { StyleSheet, Text, View, AppRegistry } from 'react-native';
-// import { createStackNavigator } from 'react-navigation';
 import {Router, Scene } from 'react-native-router-flux';
 
 export default class SmokeApp extends React.Component {
-  // static navigationOptions = {
-  //   title: 'Home',
-  // };
   render() {
     return (
       <View styles={styles.container}>

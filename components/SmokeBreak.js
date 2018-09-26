@@ -4,9 +4,6 @@ import Input from './Input';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 var moment = require('moment');
-var currentTime = moment().format('hmm');
-var convertedTime = parseInt(currentTime);
-
 
 export default class SmokeBreak extends React.Component {
     skippingBreak() {
@@ -39,15 +36,12 @@ export default class SmokeBreak extends React.Component {
         })
 
         const startHours = this.props.day_start / 100
-        const startMinutes = startHours * 60
-        const endHours = this.props.day_end / 100
-        const endMinutes = endHours * 60
-
+        // const startMinutes = startHours * 60
+        // const endHours = this.props.day_end / 100
+        // const endMinutes = endHours * 60
         
-
-
-        const startPlusInterval = startMinutes + interval
-
+        // const startPlusInterval = startMinutes + interval
+        
         const totalHours = (this.props.day_end - this.props.day_start) / 100
         const totalMinutes = totalHours * 60
 
@@ -58,30 +52,23 @@ export default class SmokeBreak extends React.Component {
         let month = currentDate.getMonth()
         let date = currentDate.getDate()
 
-        
-
         let startDateTime = new Date(year, month, date, startHours)
-        console.log(startDateTime)
 
         let breakDateTime = nextBreak(startDateTime, interval)
 
         let timeDifference = (breakDateTime - currentDate) / 60000
 
-        console.log('DIFFMINUTES', timeDifference)
-
         this.setState({
             break_interval: interval,
-            currentTimeinMinutes: getMinutesToday(),
+            // currentTimeinMinutes: getMinutesToday(),
             nextBreak: breakDateTime,
-        }, () => { console.log(this.state) })
-        
+        })
 
-        
-        this.setState({ timer: Math.round((this.props.day_end-convertedTime)/this.props.cigarette_limit) });
+        this.setState({ timer: Math.round(timeDifference) });
 
         this.interval = setInterval(
             () => this.setState({timer: --this.state.timer}),
-            100
+            60000
         );
 
         function nextBreak(dateTime, interval) {
@@ -90,30 +77,36 @@ export default class SmokeBreak extends React.Component {
             return myBreak
         }
 
-        function getMinutesToday() {
-            let now = new Date();
+    //     function getMinutesToday() {
+    //         let now = new Date();
 
-            // create an object using the current day/month/year
-            let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    //         // create an object using the current day/month/year
+    //         let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-            let diff = now - today; // ms difference
-            return Math.round(diff / 60000); // make minutes
-        }
+    //         let diff = now - today; // ms difference
+    //         return Math.round(diff / 60000); // make minutes
+    //     }
+
     }
 
     componentDidUpdate(){
-        if(this.state.timer === 0){
+        if(this.state.timer === 0 && this.state.breaks_left >= 0){
             this.smokeBreakAlert(); 
-            // clearInterval(this.interval);        
+        // } else if(this.state.timer < 0){
+        //     this.smokeBreakAlert();
         }
     }
-
-    convertTimesToInterval(start, end, limit) {
-        const totalHours = (end - start) / 100
-        const totalMinutes = totalHours * 60
-        const interval = totalMinutes / limit
-        return interval
+    
+    componentWillUnmount(){
+        clearInterval(this.interval);        
     }
+
+    // convertTimesToInterval(start, end, limit) {
+    //     const totalHours = (end - start) / 100
+    //     const totalMinutes = totalHours * 60
+    //     const interval = totalMinutes / limit
+    //     return interval
+    // }
 
     constructor(props) {
         super(props);
@@ -121,7 +114,7 @@ export default class SmokeBreak extends React.Component {
             timer: 0,
             break_interval: 0,
             breaks_left: 0,
-            break_time: 0
+            nextBreak: ''
         };
     }
         render() {
@@ -130,7 +123,7 @@ export default class SmokeBreak extends React.Component {
                 <Text style={styles.label}>Your next smoke break will be at:</Text>
                 <Text style={styles.timeText}>{moment(this.state.nextBreak).format('hh:mm a')}</Text>
                 <Text style={styles.countdownTimer}>{this.state.timer} minutes left!</Text>
-                <TouchableOpacity style={styles.button} onPress={() => Actions.home()}>
+                <TouchableOpacity style={styles.button} onPress={() => console.log(this.state)}>
                     <Text style={styles.buttonText}>{this.state.breaks_left} breaks remaining</Text>
                 </TouchableOpacity>
             </View>

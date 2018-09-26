@@ -56,25 +56,25 @@ export default class Input extends React.Component {
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Name:</Text>
                     <TextInput
-                    style={styles.input} onChangeText={(smoker_name) => this.setState({smoker_name: smoker_name})}
+                    style={styles.input} placeholder="Name" onChangeText={(smoker_name) => this.setState({smoker_name: smoker_name})}
                     />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Wake:</Text>
                     <TextInput
-                    style={styles.input} onChangeText={(time) => this.setState({day_start: time})}
+                    style={styles.input} placeholder="Ex: 0600" onChangeText={(time) => this.setState({day_start: time})}
                     />
                 </View>
                     <View style={styles.inputContainer}>
                     <Text style={styles.label}>Sleep:</Text>
                     <TextInput
-                    style={styles.input} onChangeText={(time) => this.setState({day_end: time})}
+                    style={styles.input} placeholder="Ex: 2200" onChangeText={(time) => this.setState({day_end: time})}
                     />
                 </View>
                     <View style={styles.inputContainer}>
                     <Text style={styles.label}>Limit:</Text>
                     <TextInput
-                    style={styles.input} onChangeText={(limit) => this.setState({cigarette_limit: limit})}
+                    style={styles.input} placeholder="0" onChangeText={(limit) => this.setState({cigarette_limit: limit})}
                     />
                 </View>
                 <TouchableOpacity style={styles.button} onPress={() => this.inputInfo()}>

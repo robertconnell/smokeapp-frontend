@@ -7,12 +7,15 @@ var moment = require('moment');
 
 export default class SmokeBreak extends React.Component {
     skippingBreak() {
-        this.setState({ timer: Math.round((this.props.day_end-convertedTime)/this.props.cigarette_limit) });
+        // this.setState({ timer: Math.round(timeDifference) });
+        clearInterval(this.interval);
+        Actions.home();
     }
     
     takingBreak() {
-        this.setState({ breaks_left: this.state.breaks_left - 1 })
-        this.setState({ timer: Math.round((this.props.day_end-convertedTime)/this.props.cigarette_limit) });
+        // this.setState({ breaks_left: this.state.breaks_left - 1 })
+        // this.setState({ timer: Math.round(timeDifference) });
+        clearInterval(this.interval);
     }
 
     smokeBreakAlert() {
@@ -68,7 +71,7 @@ export default class SmokeBreak extends React.Component {
 
         this.interval = setInterval(
             () => this.setState({timer: --this.state.timer}),
-            60000
+            1000
         );
 
         function nextBreak(dateTime, interval) {
@@ -90,8 +93,9 @@ export default class SmokeBreak extends React.Component {
     }
 
     componentDidUpdate(){
-        if(this.state.timer === 0 && this.state.breaks_left >= 0){
+        if(this.state.timer === 0){
             this.smokeBreakAlert(); 
+            clearInterval(this.interval);   
         // } else if(this.state.timer < 0){
         //     this.smokeBreakAlert();
         }
@@ -123,7 +127,7 @@ export default class SmokeBreak extends React.Component {
                 <Text style={styles.label}>Your next smoke break will be at:</Text>
                 <Text style={styles.timeText}>{moment(this.state.nextBreak).format('hh:mm a')}</Text>
                 <Text style={styles.countdownTimer}>{this.state.timer} minutes left!</Text>
-                <TouchableOpacity style={styles.button} onPress={() => console.log(this.state)}>
+                <TouchableOpacity style={styles.button} onPress={() => console.log('Hello World')}>
                     <Text style={styles.buttonText}>{this.state.breaks_left} breaks remaining</Text>
                 </TouchableOpacity>
             </View>

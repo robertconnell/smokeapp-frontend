@@ -1,3 +1,5 @@
+(https://raw.githubusercontent.com/robertconnell/smokeapp-frontend/master/assets/smokebreakLogo.png)
+
 ## Description
 
 Smoke Break is a new app for iOS (at the moment) that enables you to calculate the most evenly spaced out times for you to take your smoke breaks. You'll be notified once they arrive so you don't even have to think about it while you're going about your day.

@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/robertconnell/smokeapp-frontend/master/assets/smokebreakLogo.png&s=200)
+![](https://raw.githubusercontent.com/robertconnell/smokeapp-frontend/master/assets/smokebreakLogo.pngs=200)
 
 ## Description
 
